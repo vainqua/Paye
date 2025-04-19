@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- Métadonnées de base -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SENZA - Formation Closing Elite</title>
+    
+    <!-- Google Fonts - Police Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Script CinetPay pour les paiements -->
+  <script src="https://cdn.cinetpay.com/seamless/main.js" type="text/javascript"></script>
+    
+    <script>
+    function chekout(){
+        CinetPay.setConfig({
+    apikey: '138753138067f946b23b3379.56128560',
+    site_id: 105892018,
+    notify_url: 'https://webhook.site/7a785b7b-7391-4624-8e9b-eda3a3bed7d7',
+    close_after_response: true,
+     mode: 'PRODUCTION'
+});
+    CinetPay.getCheckout({
+    transaction_id: Math.floor(Math.random() * 100000000).toString(),
+    amount: 100,
+    currency: 'CDF',
+    channels: 'ALL',
+    description: 'YOUR_PAYMENT_DESCRIPTION',
+    //Fournir ces variables obligatoirement pour le paiements par carte bancaire
+    customer_name:"Joe",//Le nom du client
+    customer_surname:"Down",//Le prenom du client
+    customer_email: "down@test.com",//l'email du client
+    customer_phone_number: "088767611",//l'email du client
+    customer_address : "BP 0024",//addresse du client
+    customer_city: "Antananarivo",// La ville du client
+    customer_country : "CM",// le code ISO du pays
+    customer_state : "CM",// le code ISO l'état
+    customer_zip_code : "06510", // code postal
+});
+           CinetPay.waitResponse(function(data) {
+         // En cas d'échec
+          if (data.status == "REFUSED") {
+              if (alert("Votre paiement a échoué")) {
+                  window.location.reload();
+              }
+          }
+          // En cas de succès
+          else if (data.status == "ACCEPTED") {
+              if (alert("Votre paiement a été effectué avec succès")) {
+                  // correct, on delivre le service
+                  window.location.reload();
+              }
+          }
+   });
+        CinetPay.onError(function(data) {
+                console.log(data);
+            });
+    }
+     
+
+
+    </script>
+    <!-- Style CSS intégré -->
+    <style>
+        /* === VARIABLES GLOBALES === */
+        :root {
+            --primary: #FF6B00;         /* Couleur principale orange */
+            --primary-dark: #e05d00;    /* Version foncée de la couleur principale */
+            --secondary: #0056B3;       /* Couleur secondaire bleue */
+            --success: #28a745;         /* Couleur pour succès (vert) */
+            --error: #dc3545;           /* Couleur pour erreurs (rouge) */
+            --warning: #ffc107;         /* Couleur pour avertissements (jaune) */
+            --light-gray: #f8f9fa;      /* Gris clair pour fond */
+            --dark-gray: #343a40;       /* Gris foncé pour texte */
+            --transition: all 0.3s ease;/* Transition par défaut */
+        }
+
+        /* === RÉINITIALISATION === */
+        * {
+            box-sizing: border-box;     /* Modèle de boîte inclus les bordures */
+            margin: 0;                  /* Supprime les marges par défaut */
+            padding: 0;                 /* Supprime les paddings par défaut */
+        }
+
+        /* === STRUCTURE DE BASE === */
+        body {
+            font-family: 'Poppins', sans-serif; /* Police principale */
+            background: var(--light-gray);      /* Fond gris clair */
+            color: #333;                        /* Couleur de texte principale */
+            line-height: 1.6;                   /* Hauteur de ligne */
+            padding: 20px;                      /* Marge intérieure */
+        }
+
+        /* Conteneur principal */
+        .container {
+            max-width: 800px;                   /* Largeur maximale */
+            margin: 0 auto;                     /* Centrage horizontal */
+            padding: 20px;                      /* Marge intérieure */
+            animation: fadeIn 0.5s ease-out;    /* Animation d'apparition */
+        }
+
+        /* Animation d'apparition */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === EN-TÊTE === */
+        .header {
+            display: flex;                      /* Disposition flexible */
+            align-items: center;                /* Alignement vertical */
+            justify-content: space-between;     /* Espacement entre éléments */
+            flex-wrap: wrap;                    /* Passage à la ligne si besoin */
+            margin-bottom: 20px;                /* Marge basse */
+            gap: 15px;                          /* Espace entre éléments */
+        }
+
+        /* Style du logo */
+        .logo {
+            height: 60px;                       /* Hauteur fixe */
+            transition: var(--transition);      /* Transition fluide */
+        }
+
+        /* Effet hover sur le logo */
+        .logo:hover {
+            transform: scale(1.05);             /* Légère augmentation de taille */
+        }
+
+        /* Style du titre principal */
+        .header h1 {
+            color: var(--primary);              /* Couleur orange */
+            font-size: 1.8rem;                  /* Taille de police */
+            flex: 1;                            /* Prend l'espace disponible */
+            min-width: 250px;                   /* Largeur minimale */
+        }
+
+        /* === BANDEAU URGENCE === */
+        .urgency-badge {
+            background: var(--secondary);       /* Fond bleu */
+            color: white;                       /* Texte blanc */
+            padding: 8px 15px;                  /* Marge intérieure */
+            border-radius: 20px;                /* Coins arrondis */
+            font-weight: 600;                   /* Gras */
+            text-align: center;                /* Centrage du texte */
+            margin: 10px 0 20px;                /* Marges */
+            animation: pulse 2s infinite;       /* Animation pulsante */
+            width: 100%;                        /* Pleine largeur */
+        }
+
+        /* Animation pulsante */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.03); }
+            100% { transform: scale(1); }
+        }
+
+        /* === SECTION AVANTAGES === */
+        h2 {
+            color: var(--dark-gray);            /* Texte gris foncé */
+            margin: 20px 0 15px;                /* Marges */
+            font-size: 1.5rem;                  /* Taille de police */
+        }
+
+        /* Liste des avantages */
+        .benefits {
+            list-style: none;                   /* Supprime les puces */
+            padding: 0;                         /* Supprime le padding */
+            margin-bottom: 30px;                /* Marge basse */
+        }
+
+        /* Éléments de la liste */
+        .benefits li {
+            margin-bottom: 12px;                /* Espace entre éléments */
+            position: relative;                /* Position relative pour pseudo-élément */
+            padding-left: 35px;                /* Marge gauche pour icône */
+            transition: var(--transition);      /* Transition fluide */
+        }
+
+        /* Effet hover sur les éléments */
+        .benefits li:hover {
+            transform: translateX(5px);         /* Décalage vers la droite */
+        }
+
+        /* Icônes avant chaque élément */
+        .benefits li::before {
+            content: "\f00c";                  /* Icône Font Awesome (check) */
+            font-family: "Font Awesome 6 Free"; /* Famille de police */
+            font-weight: 900;                   /* Poids de la police */
+            color: var(--primary);              /* Couleur orange */
+            position: absolute;                 /* Position absolue */
+            left: 0;                           /* Alignement à gauche */
+            top: 0;                            /* Alignement en haut */
+            font-size: 1.2rem;                 /* Taille de l'icône */
+        }
+
+        /* === FORMULAIRE DE PAIEMENT === */
+        .payment-form {
+            background: white;                  /* Fond blanc */
+            border-radius: 10px;                /* Coins arrondis */
+            padding: 25px;                      /* Marge intérieure */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Ombre portée */
+            margin-top: 30px;                   /* Marge haute */
+            transition: var(--transition);      /* Transition fluide */
+        }
+
+        /* Effet hover sur le formulaire */
+        .payment-form:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15); /* Ombre plus prononcée */
+        }
+
+        /* Titre du formulaire */
+        .payment-form h3 {
+            color: var(--primary);              /* Couleur orange */
+            margin-bottom: 20px;                /* Marge basse */
+            text-align: center;                /* Centrage du texte */
+            font-size: 1.3rem;                  /* Taille de police */
+        }
+
+        /* Groupes de champs */
+        .form-group {
+            margin-bottom: 20px;                /* Espace entre groupes */
+        }
+
+        /* Étiquettes des champs */
+        label {
+            display: block;                     /* Affichage en bloc */
+            margin-bottom: 8px;                 /* Marge basse */
+            font-weight: 600;                   /* Gras */
+            color: var(--dark-gray);           /* Couleur gris foncé */
+        }
+
+        /* Indicateur de champ obligatoire */
+        .required {
+            color: var(--error);                /* Couleur rouge */
+            font-size: 0.9em;                  /* Taille réduite */
+        }
+
+        /* Champs de saisie */
+        input, select {
+            width: 100%;                        /* Pleine largeur */
+            padding: 12px 15px;                 /* Marge intérieure */
+            border: 1px solid #ddd;            /* Bordure grise */
+            border-radius: 5px;                 /* Coins arrondis */
+            font-family: 'Poppins', sans-serif; /* Police */
+            font-size: 1rem;                    /* Taille de police */
+            transition: var(--transition);      /* Transition fluide */
+        }
+
+        /* Style des champs au focus */
+        input:focus, select:focus {
+            border-color: var(--primary);       /* Bordure orange */
+            outline: none;                      /* Supprime le contour par défaut */
+            box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.2); /* Ombre orange */
+        }
+
+        /* Groupe pour le numéro de téléphone */
+        .phone-input {
+            display: flex;                      /* Disposition flexible */
+            gap: 10px;                         /* Espace entre éléments */
+        }
+
+        /* Préfixe du numéro de téléphone */
+        #prefix {
+            flex: 0 0 80px;                     /* Largeur fixe */
+            text-align: center;                 /* Centrage du texte */
+            background: #f1f1f1;               /* Fond gris clair */
+            font-weight: bold;                  /* Gras */
+        }
+
+        /* === BOUTON ET ÉTATS === */
+        button {
+            background: var(--primary);        /* Fond orange */
+            color: white;                       /* Texte blanc */
+            border: none;                       /* Pas de bordure */
+            padding: 15px;                      /* Marge intérieure */
+            width: 100%;                        /* Pleine largeur */
+            border-radius: 5px;                 /* Coins arrondis */
+            font-weight: 600;                   /* Gras */
+            cursor: pointer;                    /* Curseur pointeur */
+            transition: var(--transition);      /* Transition fluide */
+            display: flex;                      /* Disposition flexible */
+            align-items: center;                /* Alignement vertical */
+            justify-content: center;            /* Alignement horizontal */
+        }
+
+        /* Effet hover sur le bouton */
+        button:hover {
+            background: var(--primary-dark);    /* Fond orange foncé */
+            transform: translateY(-2px);        /* Légère élévation */
+        }
+
+        /* Bouton désactivé */
+        button:disabled {
+            background: #ccc;                   /* Fond gris */
+            cursor: not-allowed;                /* Curseur interdit */
+            transform: none;                    /* Pas de transformation */
+        }
+
+        /* Indicateur de chargement */
+        .loading-spinner {
+            display: none;                      /* Caché par défaut */
+            border: 3px solid rgba(255, 255, 255, 0.3); /* Bordure semi-transparente */
+            border-radius: 50%;                 /* Cercle */
+            border-top: 3px solid white;        /* Bordure supérieure blanche */
+            width: 20px;                        /* Largeur */
+            height: 20px;                       /* Hauteur */
+            animation: spin 1s linear infinite; /* Animation de rotation */
+            margin-right: 10px;                /* Marge droite */
+        }
+
+        /* Animation de rotation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* === MESSAGES D'ERREUR/SUCCÈS === */
+        /* Champ avec erreur */
+        .input-error {
+            border-color: var(--error) !important; /* Bordure rouge */
+        }
+
+        /* Message d'erreur */
+        .error-message {
+            color: var(--error);                /* Texte rouge */
+            font-size: 0.8rem;                  /* Taille réduite */
+            margin-top: 5px;                    /* Marge haute */
+            display: none;                      /* Caché par défaut */
+        }
+
+        /* Message de succès */
+        .success-message {
+            color: var(--success);              /* Texte vert */
+            text-align: center;                 /* Centrage */
+            margin-top: 15px;                   /* Marge haute */
+            font-weight: 600;                   /* Gras */
+            display: none;                      /* Caché par défaut */
+            animation: fadeIn 0.5s ease-out;    /* Animation d'apparition */
+        }
+
+        /* Message d'avertissement */
+        .warning-message {
+            color: var(--warning);              /* Texte jaune */
+            text-align: center;                 /* Centrage */
+            margin: 15px 0;                     /* Marges */
+            font-size: 0.9rem;                  /* Taille réduite */
+        }
+
+        /* === FOOTER === */
+        .footer {
+            text-align: center;                 /* Centrage */
+            margin-top: 30px;                   /* Marge haute */
+            padding-top: 20px;                  /* Marge intérieure haute */
+            border-top: 1px solid #eee;         /* Bordure supérieure */
+            font-size: 0.8rem;                  /* Taille réduite */
+            color: #666;                        /* Couleur grise */
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 600px) {
+            /* Adaptation de l'en-tête */
+            .header {
+                flex-direction: column;        /* Disposition verticale */
+                text-align: center;             /* Centrage du texte */
+            }
+            
+            /* Adaptation du titre */
+            .header h1 {
+                margin-left: 0;                /* Supprime la marge gauche */
+                margin-top: 10px;              /* Marge haute */
+            }
+            
+            /* Adaptation du champ téléphone */
+            .phone-input {
+                flex-direction: column;        /* Disposition verticale */
+            }
+            
+            /* Adaptation du préfixe */
+            #prefix {
+                width: 100%;                   /* Pleine largeur */
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Conteneur principal -->
+    <div class="container">
+        <!-- En-tête avec logo et titre -->
+        <div class="header">
+            <!-- Logo factice - À remplacer par votre vrai logo -->
+            <div class="logo" style="background-color: var(--primary); width: 60px; height: 60px; border-radius: 10px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">SENZA</div>
+            <h1>Devenez un Closer d'Élite en 7 Jours</h1>
+        </div>
+        
+        <!-- Bandeau d'urgence -->
+        <div class="urgency-badge">Offre spéciale - 50 places seulement</div>
+
+        <!-- Section avantages -->
+        <h2>Ce que vous allez apprendre :</h2>
+        <ul class="benefits">
+            <li>Techniques de closing avancées</li>
+            <li>Scripts de vente éprouvés</li>
+            <li>Gestion des objections</li>
+            <li>Accès au groupe privé Telegram</li>
+            <li>Support personnalisé 7j/7</li>
+        </ul>
+
+        <!-- Message d'avertissement -->
+        <div class="warning-message">
+            <i class="fas fa-exclamation-circle"></i> Après paiement, vous recevrez un SMS avec accès à la formation
+        </div>
+
+        <!-- Formulaire de paiement -->
+        <div class="payment-form">
+            <h3>Accédez maintenant pour seulement <span id="amount-display">10 000 XOF</span></h3>
+
+            <form id="payment-form">
+
+                <!-- Bouton de paiement -->
+                <button onclick="chekout()">Payer maintenant</button>
+                
+                <!-- Message de succès -->
+                <div class="success-message" id="success-message">
+                    <i class="fas fa-check-circle"></i> Paiement initié avec succès! Vérifiez votre mobile money.
+                </div>
+            </form>
+        </div>
+        
+        <!-- Pied de page -->
+        <div class="footer">
+            <p>© 2023 SENZA Formation | <a href="#" style="color: var(--primary);">Conditions générales</a> | <a href="#" style="color: var(--primary);">Support</a></p>
+        </div>
+    </div>
+</body>
+</html>
